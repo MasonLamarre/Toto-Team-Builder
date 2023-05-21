@@ -1,4 +1,3 @@
-import { accountDatabaseCommands } from "./databaseCommands/account"
 import { teamsDatabaseCommands } from "./databaseCommands/teams";
 import { buttonStyles } from "./sharedStyles";
 

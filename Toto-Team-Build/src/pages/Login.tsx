@@ -4,6 +4,9 @@ import { buttonStyles, inputStyles } from '../util/sharedStyles'
 import { LogoutUserButton } from '../util/LogoutUserButton'
 import { CreateNewTeam } from '../util/CreateNewTeamButton'
 import { DeleteTeamButton } from '../util/deleteTeamButton'
+import { UpdateTeamButton } from '../util/updateTeamButton'
+import { bulbasaurTestObject } from '../util/testPokemon'
+
 
 export const Login = () => {
     const [username, setUsername] = useState('')
@@ -77,7 +80,14 @@ export const Login = () => {
 
            <DeleteTeamButton 
                 username={username}
-                teamId='T-5a81110a-16ea-45a5-8ab6-3825039584e4'
+                teamId='T-08917b42-f458-4853-a004-169d976dcfa9'
+           />
+
+           <UpdateTeamButton 
+                username={username}
+                teamId='T-08917b42-f458-4853-a004-169d976dcfa9'
+                teamName={teamname}
+                pokemon={[]}
            />
         </div>
     )

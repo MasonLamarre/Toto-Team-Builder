@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { TEAMQUERY } from "./queryConsts";
-import { createTeamPayload, deleteTeamPayload } from "./queryTypes";
+import { createTeamPayload, deleteTeamPayload, updateTeamPayload } from "./queryTypes";
+import { pokemonData } from "../pokemonTypes";
 
 
 const createTeam = async(
@@ -37,13 +38,42 @@ const useCreateTeam = (id: string) => (
     })
 )
 
-// const updateTeam = async () => (
+const updateTeam = async (
+    username : string,
+    teamId : string,
+    teamInfo : { 
+        teamName : string,
+        pokemon: pokemonData[] 
+    }
+) => (
+    await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/teams/update', {
+        username: username,
+        teamId: teamId,
+        teamInfo : teamInfo
+    }).then(
+        (response) => response
+    ).catch(
+        (err) => err
+    )
+)
 
-// )
-
-// const useUpdateTeam = () => (
-
-// )
+const useUpdateTeam = (teamId : string) => (
+    useMutation({
+        mutationKey: [TEAMQUERY.update, teamId],
+        mutationFn: async (variables: updateTeamPayload) => {
+            console.log(variables);
+            const response = await updateTeam(
+                variables.username,
+                variables.teamId,
+                variables.teamInfo
+            )
+            if (response?.name === 'AxiosError' || response === undefined) {
+                throw new Error(response)
+            }
+            return response.data;
+        }
+    })
+)
 
 const deleteTeam = async (
     username: string,
@@ -88,7 +118,7 @@ const useDeleteTeam = (teamId : string) => (
 
 export const teamsDatabaseCommands = {
     create : useCreateTeam,
-    // update : useUpdateTeam,
+    update : useUpdateTeam,
     delete : useDeleteTeam,
     // getTeams : useGetTeams
 }

@@ -1,3 +1,5 @@
+import { pokemonData } from "../pokemonTypes"
+
 export type createAccountPayload  = {
     username: string,
     password: string,
@@ -24,3 +26,14 @@ export type deleteTeamPayload = {
     username: string,
     teamId: string
 }
+
+export type updateTeamPayload = {
+    username: string,
+    teamId: string,
+    teamInfo : {
+        teamName: string,
+        pokemon: pokemonData[]
+    }
+}
+
+
