@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import { accountDatabaseCommands } from '../../util/databaseCommands/account'
-import { buttonStyles, inputStyles } from '../../util/sharedStyles'
+import { buttonStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
+import { TotoTeamBuildLogo } from '../../util/logoSvg'
 
-export const Login = () => {
+type loginProps = {
+    toggleUserLoggedIn : () => void
+}
+
+export const Login = ({
+    toggleUserLoggedIn
+} : loginProps ) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const loginUser = accountDatabaseCommands.login(username)
@@ -14,6 +21,7 @@ export const Login = () => {
                 password: password
             }, {
                 onSuccess: (data) => {
+                    toggleUserLoggedIn();
                     console.log('query success', data)
                 }, //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
@@ -23,35 +31,55 @@ export const Login = () => {
 
 
     return (
-        <div className='w-full h-full flex flex-col items-center'>
-            <div className='flex flex-col'>
-                <span>Username :</span>
-                <input
-                    placeholder='"supertrainer123"'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className={inputStyles.primary}
-                />
+        <div className={screenContainerClass}>
+
+            <div>
+                <div className='flex flex-col gap-2 items-center justify-center'>
+                    <TotoTeamBuildLogo
+                        height={'8rem'}
+                        width={'8rem'}
+                    />
+                    <span>Toto Team Builder</span>
+                </div>
             </div>
 
-            <div className='flex flex-col'>
-                <span>Password :</span>
-                <input
-                    type='password'
-                    placeholder='"password"'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className={inputStyles.primary}
-                />
+            <div className='flex flex-col justify-center gap-4'>
+                <div className='flex flex-col'>
+                    <span>Username</span>
+                    <input
+                        placeholder='"supertrainer123"'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className={inputStyles.primary}
+                    />
+                </div>
+
+                <div className='flex flex-col'>
+                    <span>Password</span>
+                    <input
+                        type='password'
+                        placeholder='"password"'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={inputStyles.primary}
+                    />
+                    {/* link back to landing page */}
+                    <span className='text-sm'>Create Account</span>
+                </div>
+
+                <div className='flex flex-col items-center gap-2'>
+                    <button
+                        className={!username || !password  ? buttonStyles.disabled : buttonStyles.primary}
+                        disabled={!username || !password}
+                        onClick={handleLogin}
+                    >
+                        Login
+                    </button>
+                    
+                </div>
             </div>
 
-            <button
-                className={!username || !password  ? buttonStyles.disabled : buttonStyles.primary}
-                disabled={!username || !password}
-                onClick={handleLogin}
-            >
-                Login
-            </button>
+            
         </div>
     )
 }

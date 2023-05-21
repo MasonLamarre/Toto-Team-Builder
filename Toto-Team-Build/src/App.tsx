@@ -1,5 +1,5 @@
 import { LandingPage } from './pages/landingPage/LandingPage';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const App = () => {
@@ -7,8 +7,12 @@ const App = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
   
   const toggleLoggedIn = () => {
-    setIsUserLoggedIn((isLogged) => !!isLogged);
+    setIsUserLoggedIn((isLogged) => !isLogged);
   };
+
+  useEffect(() => {
+    console.log('user logg in? ', isUserLoggedIn);
+  },[isUserLoggedIn])
 
   return (
     isUserLoggedIn ? <span>You logged in</span> : <LandingPage  toggleUserLoggedIn={toggleLoggedIn}/>

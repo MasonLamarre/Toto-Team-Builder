@@ -2,6 +2,7 @@ import { useState } from "react";
 import { buttonStyles, screenContainerClass } from "../../util/sharedStyles"
 import { TotoTeamBuildLogo } from "../../util/logoSvg";
 import { Login } from "./Login";
+import { CreateAccount } from "./CreateAccount";
 
 type loginBtnProps = {
     toggleLogin: () => void
@@ -80,7 +81,7 @@ export const LandingPage = ({
         <div
            className={screenContainerClass}
         >
-            { isLoggingIn ? <Login /> : ( isCreatingAccount ? <span>make acc</span> : <BaseLandingScreen /> ) }
+            { isLoggingIn ? <Login  toggleUserLoggedIn={toggleUserLoggedIn}/> : ( isCreatingAccount ? <CreateAccount toggleIsLoggedIn={toggleUserLoggedIn}/> : <BaseLandingScreen /> ) }
         </div>
     )
 }
