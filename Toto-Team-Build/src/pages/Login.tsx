@@ -3,6 +3,7 @@ import { accountDatabaseCommands } from '../util/databaseCommands/account'
 import { buttonStyles, inputStyles } from '../util/sharedStyles'
 import { LogoutUserButton } from '../util/LogoutUserButton'
 import { CreateNewTeam } from '../util/CreateNewTeamButton'
+import { DeleteTeamButton } from '../util/deleteTeamButton'
 
 export const Login = () => {
     const [username, setUsername] = useState('')
@@ -72,6 +73,11 @@ export const Login = () => {
            <CreateNewTeam 
                 username={username}
                 teamname={teamname}
+           />
+
+           <DeleteTeamButton 
+                username={username}
+                teamId='T-5a81110a-16ea-45a5-8ab6-3825039584e4'
            />
         </div>
     )

@@ -19,3 +19,8 @@ export type createTeamPayload = {
     teamId: string,
     teamName: string
 }
+
+export type deleteTeamPayload = {
+    username: string,
+    teamId: string
+}

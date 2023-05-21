@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { TEAMQUERY } from "./queryConsts";
-import { createTeamPayload } from "./queryTypes";
+import { createTeamPayload, deleteTeamPayload } from "./queryTypes";
 
 
 const createTeam = async(
@@ -45,13 +45,38 @@ const useCreateTeam = (id: string) => (
 
 // )
 
-// const deleteTeam = async () => (
+const deleteTeam = async (
+    username: string,
+    teamId: string
+) => (
+    await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/teams/delete', {
+        username: username,
+        teamId: teamId,
+    }).then(
+        (response) => {
+            console.log(response)
+            return response
+        }
+    ).catch(
+        (err) => err
+    )
+)
 
-// )
-
-// const useDeleteTeam = () => (
-
-// )
+const useDeleteTeam = (teamId : string) => (
+    useMutation({
+        mutationKey: [TEAMQUERY.delete, teamId],
+        mutationFn: async(variables : deleteTeamPayload) => {
+            const response = await deleteTeam(
+                variables.username,
+                variables.teamId
+            )
+            if (response?.name === 'AxiosError' || response === undefined) {
+                throw new Error(response)
+            }
+            return response.data;
+        }
+    })
+)
 
 // const getTeams = async () => (
 
@@ -64,6 +89,6 @@ const useCreateTeam = (id: string) => (
 export const teamsDatabaseCommands = {
     create : useCreateTeam,
     // update : useUpdateTeam,
-    // delete : useDeleteTeam,
+    delete : useDeleteTeam,
     // getTeams : useGetTeams
 }
