@@ -1,16 +1,12 @@
+import { useState } from 'react'
+import { joinTailwindClasses } from './util/joinTailwindClasses'
+import { buttonStyles } from './util/sharedStyles'
+import { accountDatabaseCommands } from './util/databaseCommands/account'
+import { CreateAccount } from './pages/CreateAccount'
 
-function App() {
 
-
-  return (
-    <>
-      <div className='w-full h-full flex justify-center'>
-        <span className='text-red-400 underline text-3xl'>
-            Test 123 for Tailwind
-          </span>
-      </div>
-    </>
-  )
+const App = () => {
+  return <CreateAccount />
 }
 
 export default App
