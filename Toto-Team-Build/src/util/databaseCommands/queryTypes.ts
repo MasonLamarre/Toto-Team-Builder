@@ -4,3 +4,10 @@ export type createAccountPayload  = {
     firstName: string,
     lastName: string
 }
+
+
+
+export type loginUserPayload = {
+    username: string,
+    password: string,
+}

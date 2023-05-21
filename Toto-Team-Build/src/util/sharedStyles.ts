@@ -7,3 +7,19 @@ export const buttonStyles = {
     secondary : secondaryButton,
     disabled: disabledButton
 }
+
+
+const primaryInput = 'w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm'
+
+const secondaryInput = ''
+
+const errorInput = 'w-80 font-sans font-normal text-base p-3 border rounded bg-red-100 shadow-sm border-red-400 focus-visible:outline-red-400 '
+
+const disabledInput = ''
+
+export const inputStyles = {
+    primary: primaryInput,
+    secondary: secondaryInput,
+    disabled: disabledInput,
+    error: errorInput
+}

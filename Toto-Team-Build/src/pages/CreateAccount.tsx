@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { accountDatabaseCommands } from '../util/databaseCommands/account'
-import { joinTailwindClasses } from '../util/joinTailwindClasses'
-import { buttonStyles } from '../util/sharedStyles'
+import { buttonStyles, inputStyles } from '../util/sharedStyles'
 
 
 
@@ -46,7 +45,7 @@ export const CreateAccount = () => {
                             placeholder='"Ash"'
                             value={firstname}
                             onChange={(e) => setFirstname(e.target.value)}
-                            className=' w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm'
+                            className={inputStyles.primary}
                         />
                     </div>
 
@@ -56,7 +55,7 @@ export const CreateAccount = () => {
                             placeholder='"Ketchum"'
                             value={lastname}
                             onChange={(e) => setLastname(e.target.value)}
-                            className=' w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm'
+                            className={inputStyles.primary}
                         />
                     </div>
 
@@ -66,7 +65,7 @@ export const CreateAccount = () => {
                             placeholder='"supertrainer123"'
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className=' w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm'
+                            className={inputStyles.primary}
                         />
                     </div>
 
@@ -77,7 +76,8 @@ export const CreateAccount = () => {
                             placeholder='"password123"'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className=' w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm'
+                            className={inputStyles.primary}
+
                         />
                     </div>
 
@@ -88,10 +88,9 @@ export const CreateAccount = () => {
                             placeholder='"password123"'
                             value={verifyPassword}
                             onChange={(e) => setVerifyPassword(e.target.value)}
-                            className={joinTailwindClasses(
-                                'w-80 font-sans font-normal text-base p-3 border rounded bg-gray-100 shadow-sm',
-                                password === verifyPassword ? '' : 'border-red-400'
-                            )}
+                            className={
+                                password === verifyPassword ? inputStyles.primary : inputStyles.error
+                            }
                         />
                         {password !== verifyPassword &&
                             <span>Passwords do not match!</span>
