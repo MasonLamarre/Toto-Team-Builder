@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { accountDatabaseCommands } from '../util/databaseCommands/account'
 import { buttonStyles, inputStyles } from '../util/sharedStyles'
+import { LogoutUserButton } from '../util/LogoutUserButton'
 
 export const Login = () => {
     const [username, setUsername] = useState('')
@@ -19,6 +20,7 @@ export const Login = () => {
             })
         }
     };
+
 
     return (
         <div className='w-full h-full flex flex-col items-center'>
@@ -49,6 +51,10 @@ export const Login = () => {
             >
                 Login
             </button>
+
+           <LogoutUserButton 
+                username={username}
+           />
         </div>
     )
 }

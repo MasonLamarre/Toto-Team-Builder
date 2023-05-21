@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createAccountPayload, loginUserPayload } from "./queryTypes";
+import { createAccountPayload, loginUserPayload, logoutUserPayload } from "./queryTypes";
 import { ACCOUNTQUERY } from "./queryConsts";
 
 //update return type to axios error/sucssess account create
@@ -79,9 +79,38 @@ const useLoginUser = (username: string) => (
     })
 )
 
+const logoutUser = async(username: string) => (
+    await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/user/logout', {
+        username: username
+    }).then(
+        (response) => {
+            console.log(response);
+            return response
+        }
+    ).catch(
+        (err) => {
+            console.log(err);
+            return err
+        }
+    )
+)
+
+const useLogoutUser = (username: string) => (
+    useMutation({
+        mutationKey: [ACCOUNTQUERY.logoutUser, username],
+        mutationFn: async(variables : logoutUserPayload) => {
+            const response = await logoutUser(variables.username)
+            if (response?.name === 'AxiosError' || response === undefined) {
+                throw new Error(response.response.data)
+            }
+            return response.data
+        }
+    })
+)
 
 
 export const accountDatabaseCommands = {
     createAccount : useCreateAccount,
-    login: useLoginUser
+    login: useLoginUser,
+    logout: useLogoutUser
 }

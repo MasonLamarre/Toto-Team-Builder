@@ -21,7 +21,7 @@ export const CreateAccount = () => {
                 username: username,
                 password: password
             }, {
-                onSuccess: () => console.log('query success'), //create func to login usuer
+                onSuccess: (data) => console.log('query success', data), //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
             })
         }

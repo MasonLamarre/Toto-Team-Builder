@@ -5,7 +5,9 @@ export type createAccountPayload  = {
     lastName: string
 }
 
-
+export type logoutUserPayload = {
+    username: string
+}
 
 export type loginUserPayload = {
     username: string,
