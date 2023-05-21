@@ -13,3 +13,9 @@ export type loginUserPayload = {
     username: string,
     password: string,
 }
+
+export type createTeamPayload = {
+    username: string,
+    teamId: string,
+    teamName: string
+}

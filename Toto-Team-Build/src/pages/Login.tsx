@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { accountDatabaseCommands } from '../util/databaseCommands/account'
 import { buttonStyles, inputStyles } from '../util/sharedStyles'
 import { LogoutUserButton } from '../util/LogoutUserButton'
+import { CreateNewTeam } from '../util/CreateNewTeamButton'
 
 export const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [teamname, setTeamname] = useState('')
 
     const loginUser = accountDatabaseCommands.login(username)
 
@@ -37,6 +39,7 @@ export const Login = () => {
             <div className='flex flex-col'>
                 <span>Password :</span>
                 <input
+                    type='password'
                     placeholder='"password"'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -54,6 +57,21 @@ export const Login = () => {
 
            <LogoutUserButton 
                 username={username}
+           />
+
+            <div className='flex flex-col'>
+                <span>Teamname :</span>
+                <input
+                    placeholder='"Strike Forcer"'
+                    value={teamname}
+                    onChange={(e) => setTeamname(e.target.value)}
+                    className={inputStyles.primary}
+                />
+            </div>
+
+           <CreateNewTeam 
+                username={username}
+                teamname={teamname}
            />
         </div>
     )

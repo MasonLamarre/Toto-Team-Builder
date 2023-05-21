@@ -1,13 +1,13 @@
 import { accountDatabaseCommands } from "./databaseCommands/account"
 import { buttonStyles } from "./sharedStyles";
 
-type logoutUserButton = {
+type logoutUserButtonProps = {
     username : string
 };
 
 export const LogoutUserButton = ({
     username
-} : logoutUserButton) => {
+} : logoutUserButtonProps) => {
     const logoutUser = accountDatabaseCommands.logout(username);
     const handleLogout = () => {
         console.log(username);
