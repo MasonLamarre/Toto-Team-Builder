@@ -1,28 +1,11 @@
 import { useState } from 'react'
-import { accountDatabaseCommands } from '../util/databaseCommands/account'
-import { buttonStyles, inputStyles } from '../util/sharedStyles'
-import { LogoutUserButton } from '../util/LogoutUserButton'
-import { CreateNewTeam } from '../util/CreateNewTeamButton'
-import { DeleteTeamButton } from '../util/deleteTeamButton'
-import { UpdateTeamButton } from '../util/updateTeamButton'
-
-import { teamsDatabaseCommands } from '../util/databaseCommands/teams'
-
+import { accountDatabaseCommands } from '../../util/databaseCommands/account'
+import { buttonStyles, inputStyles } from '../../util/sharedStyles'
 
 export const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [teamname, setTeamname] = useState('')
-    const [queryUsername, setQueryUsername] = useState('')
-
-    const getTeams = teamsDatabaseCommands.getTeams(queryUsername)
     const loginUser = accountDatabaseCommands.login(username)
-
-    console.log({
-        data: getTeams.data,
-        status: getTeams.status
-    })
-
     const handleLogin = async() => {
         if(username && password){
            
@@ -31,7 +14,6 @@ export const Login = () => {
                 password: password
             }, {
                 onSuccess: (data) => {
-                    setQueryUsername(username);
                     console.log('query success', data)
                 }, //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
@@ -70,37 +52,6 @@ export const Login = () => {
             >
                 Login
             </button>
-
-           <LogoutUserButton 
-                username={username}
-           />
-
-            <div className='flex flex-col'>
-                <span>Teamname :</span>
-                <input
-                    placeholder='"Strike Forcer"'
-                    value={teamname}
-                    onChange={(e) => setTeamname(e.target.value)}
-                    className={inputStyles.primary}
-                />
-            </div>
-
-           <CreateNewTeam 
-                username={username}
-                teamname={teamname}
-           />
-
-           <DeleteTeamButton 
-                username={username}
-                teamId='T-08917b42-f458-4853-a004-169d976dcfa9'
-           />
-
-           <UpdateTeamButton 
-                username={username}
-                teamId='T-08917b42-f458-4853-a004-169d976dcfa9'
-                teamName={teamname}
-                pokemon={[]}
-           />
         </div>
     )
 }

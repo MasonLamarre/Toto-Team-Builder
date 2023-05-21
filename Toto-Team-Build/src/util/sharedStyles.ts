@@ -23,3 +23,5 @@ export const inputStyles = {
     disabled: disabledInput,
     error: errorInput
 }
+
+export const screenContainerClass = 'h-[667px] w-[375px] flex flex-col items-center justify-center'

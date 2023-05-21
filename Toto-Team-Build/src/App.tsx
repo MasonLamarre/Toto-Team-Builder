@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import { joinTailwindClasses } from './util/joinTailwindClasses'
-import { buttonStyles } from './util/sharedStyles'
-import { accountDatabaseCommands } from './util/databaseCommands/account'
-import { CreateAccount } from './pages/CreateAccount'
-import { Login } from './pages/Login'
+import { LandingPage } from './pages/landingPage/LandingPage';
+import { useState } from "react";
 
 
 const App = () => {
-  return <Login />
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+  
+  const toggleLoggedIn = () => {
+    setIsUserLoggedIn((isLogged) => !!isLogged);
+  };
+
+  return (
+    isUserLoggedIn ? <span>You logged in</span> : <LandingPage  toggleUserLoggedIn={toggleLoggedIn}/>
+  )
 }
 
 export default App
