@@ -83,10 +83,7 @@ const deleteTeam = async (
         username: username,
         teamId: teamId,
     }).then(
-        (response) => {
-            console.log(response)
-            return response
-        }
+        (response) => response
     ).catch(
         (err) => err
     )
@@ -108,17 +105,33 @@ const useDeleteTeam = (teamId : string) => (
     })
 )
 
-// const getTeams = async () => (
+const getTeams = async (username : string) => (
+    await axios.get('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/teams', {
+      params: { username : username }
+    }).then(
+        (response) => response
+    ).catch(
+        (err) => err
+    )
+)
 
-// )
-
-// const useGetTeams = () => (
-
-// )
+const useGetTeams = (username: string) => (
+    useQuery({
+        queryKey: [TEAMQUERY.searchUsersTeams, username],
+        queryFn: async() => {
+            const response = await getTeams(username)
+            if (response?.name === 'AxiosError' || response === undefined) {
+                throw new Error(response)
+            }
+            return response.data;
+        },
+        enabled: !!username
+    })
+)
 
 export const teamsDatabaseCommands = {
     create : useCreateTeam,
     update : useUpdateTeam,
     delete : useDeleteTeam,
-    // getTeams : useGetTeams
+    getTeams : useGetTeams
 }

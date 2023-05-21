@@ -5,23 +5,35 @@ import { LogoutUserButton } from '../util/LogoutUserButton'
 import { CreateNewTeam } from '../util/CreateNewTeamButton'
 import { DeleteTeamButton } from '../util/deleteTeamButton'
 import { UpdateTeamButton } from '../util/updateTeamButton'
-import { bulbasaurTestObject } from '../util/testPokemon'
+
+import { teamsDatabaseCommands } from '../util/databaseCommands/teams'
 
 
 export const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [teamname, setTeamname] = useState('')
+    const [queryUsername, setQueryUsername] = useState('')
 
+    const getTeams = teamsDatabaseCommands.getTeams(queryUsername)
     const loginUser = accountDatabaseCommands.login(username)
+
+    console.log({
+        data: getTeams.data,
+        status: getTeams.status
+    })
 
     const handleLogin = async() => {
         if(username && password){
+           
             loginUser.mutateAsync({
                 username: username,
                 password: password
             }, {
-                onSuccess: (data) => console.log('query success', data), //create func to login usuer
+                onSuccess: (data) => {
+                    setQueryUsername(username);
+                    console.log('query success', data)
+                }, //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
             })
         }
