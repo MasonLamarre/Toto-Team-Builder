@@ -5,10 +5,15 @@ import { TotoTeamBuildLogo } from '../../util/logoSvg'
 
 type loginProps = {
     toggleUserLoggedIn : () => void
+    swapToCreateAccount : () => void
+    backToLanding : () => void
 }
 
 export const Login = ({
-    toggleUserLoggedIn
+    toggleUserLoggedIn,
+    swapToCreateAccount,
+    backToLanding
+    
 } : loginProps ) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -34,7 +39,10 @@ export const Login = ({
         <div className={screenContainerClass}>
 
             <div>
-                <div className='flex flex-col gap-2 items-center justify-center'>
+                <div 
+                    onClick={backToLanding}
+                    className='flex flex-col gap-2 items-center justify-center'
+                >
                     <TotoTeamBuildLogo
                         height={'8rem'}
                         width={'8rem'}
@@ -64,7 +72,12 @@ export const Login = ({
                         className={inputStyles.primary}
                     />
                     {/* link back to landing page */}
-                    <span className='text-sm'>Create Account</span>
+                    <span 
+                        className='text-sm'
+                        onClick={swapToCreateAccount}
+                    >
+                        Create Account
+                    </span>
                 </div>
 
                 <div className='flex flex-col items-center gap-2'>

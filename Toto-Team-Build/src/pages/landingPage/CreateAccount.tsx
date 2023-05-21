@@ -6,10 +6,14 @@ import { TotoTeamBuildLogo } from '../../util/logoSvg'
 
 type createAccProps = {
     toggleIsLoggedIn : () => void
+    swapToLogin : () => void
+    backToLanding : () => void
 }
 
 export const CreateAccount = ({
-    toggleIsLoggedIn
+    toggleIsLoggedIn,
+    swapToLogin,
+    backToLanding
 } : createAccProps ) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -54,7 +58,10 @@ export const CreateAccount = ({
         <div className={screenContainerClass}>
             <div className='flex flex-col gap-4'>
                 <div>
-                    <div className='flex flex-col gap-2 items-center justify-center'>
+                    <div
+                        onClick={backToLanding} 
+                        className='flex flex-col gap-2 items-center justify-center'
+                    >
                         <TotoTeamBuildLogo
                             height={'6rem'}
                             width={'6rem'}
@@ -106,7 +113,13 @@ export const CreateAccount = ({
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>Verify Password</span>
+                    <div className='flex flex-row justify-between'>
+                        <span>Verify Password</span>
+                        {password !== verifyPassword &&
+                            <span className='text-sm'>Passwords do not match!</span>
+                        }
+                    </div>
+                    
                     <input
                         type='password'
                         placeholder='"password123"'
@@ -116,9 +129,12 @@ export const CreateAccount = ({
                             password === verifyPassword ? inputStyles.primary : inputStyles.error
                         }
                     />
-                    {password !== verifyPassword &&
-                        <span>Passwords do not match!</span>
-                    }
+                    <span
+                        className='text-sm'
+                        onClick={swapToLogin}
+                    >
+                        Already have an account?
+                    </span>
                 </div>
 
                 <div>

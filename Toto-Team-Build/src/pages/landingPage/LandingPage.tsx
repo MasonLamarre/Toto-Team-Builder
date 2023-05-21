@@ -53,11 +53,29 @@ export const LandingPage = ({
         setIsCreatingAccount((isCreating) => !isCreating)
     }
 
+    const swapToLogin = () => {
+        setIsCreatingAccount(false)
+        setIsLoggingIn(true)
+    };
+
+    const swapToCreateAccount = () => {
+        setIsLoggingIn(false)
+        setIsCreatingAccount(true)
+    }
+
+    const backToLandingPage = () => {
+        setIsLoggingIn(false)
+        setIsCreatingAccount(false)
+    }
+
     const BaseLandingScreen = () => (
         <div
             className=' flex flex-col justify-center gap-8'
         >
-            <div className='flex flex-col gap-2 items-center justify-center'>
+            <div 
+                onClick={backToLandingPage}
+                className='flex flex-col gap-2 items-center justify-center'
+            >
                 <TotoTeamBuildLogo
                     height={'12rem'}
                     width={'12rem'}
@@ -68,6 +86,7 @@ export const LandingPage = ({
             <div className='flex flex-col gap-2 items-center justify-center'>
                 <LoginButton
                     toggleLogin={toggleLogin}
+                    
                 />
 
                 <CreateNewAccountButton
@@ -81,7 +100,9 @@ export const LandingPage = ({
         <div
            className={screenContainerClass}
         >
-            { isLoggingIn ? <Login  toggleUserLoggedIn={toggleUserLoggedIn}/> : ( isCreatingAccount ? <CreateAccount toggleIsLoggedIn={toggleUserLoggedIn}/> : <BaseLandingScreen /> ) }
+            { isLoggingIn ? 
+                <Login backToLanding={backToLandingPage} swapToCreateAccount={swapToCreateAccount} toggleUserLoggedIn={toggleUserLoggedIn}/> : 
+                ( isCreatingAccount ? <CreateAccount backToLanding={backToLandingPage} swapToLogin={swapToLogin} toggleIsLoggedIn={toggleUserLoggedIn}/> : <BaseLandingScreen /> ) }
         </div>
     )
 }
