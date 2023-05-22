@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { buttonStyles, screenContainerClass } from "../../util/sharedStyles"
+import { buttonStyles, fontStyles, screenContainerClass } from "../../util/sharedStyles"
 import { TotoTeamBuildLogo } from "../../util/logoSvg";
 import { Login } from "./Login";
 import { CreateAccount } from "./CreateAccount";
@@ -83,7 +83,7 @@ export const LandingPage = ({
                     height={'12rem'}
                     width={'12rem'}
                 />
-                <span>Toto Team Builder</span>
+                <span className={fontStyles.large}>Toto Team Builder</span>
             </div>
 
             <div className='flex flex-col gap-2 items-center justify-center'>

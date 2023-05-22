@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { accountDatabaseCommands } from '../../util/databaseCommands/account'
-import { buttonStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
+import { buttonStyles, fontStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
 import { TotoTeamBuildLogo } from '../../util/logoSvg'
 import { userInfo } from '../../util/pokemonTypes'
 
@@ -65,18 +65,18 @@ export const CreateAccount = ({
                 <div>
                     <div
                         onClick={backToLanding} 
-                        className='flex flex-col gap-2 items-center justify-center'
+                        className='flex flex-col gap-2 items-center justify-center mt-4'
                     >
                         <TotoTeamBuildLogo
                             height={'6rem'}
                             width={'6rem'}
                         />
-                        <span>Toto Team Builder</span>
+                        <span className={fontStyles.large} >Toto Team Builder</span>
                     </div>
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>First Name :</span>
+                    <span className={fontStyles.medium} >First Name :</span>
                     <input
                         placeholder='"Ash"'
                         value={firstname}
@@ -86,7 +86,7 @@ export const CreateAccount = ({
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>Last Name :</span>
+                    <span className={fontStyles.medium} >Last Name :</span>
                     <input
                         placeholder='"Ketchum"'
                         value={lastname}
@@ -96,7 +96,7 @@ export const CreateAccount = ({
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>Username :</span>
+                    <span className={fontStyles.medium} >Username :</span>
                     <input
                         placeholder='"supertrainer123"'
                         value={username}
@@ -106,7 +106,7 @@ export const CreateAccount = ({
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>Password</span>
+                    <span className={fontStyles.medium} >Password</span>
                     <input
                         type='password'
                         placeholder='"password123"'
@@ -119,7 +119,7 @@ export const CreateAccount = ({
 
                 <div className='flex flex-col'>
                     <div className='flex flex-row justify-between'>
-                        <span>Verify Password</span>
+                        <span className={fontStyles.medium} >Verify Password</span>
                         {password !== verifyPassword &&
                             <span className='text-sm'>Passwords do not match!</span>
                         }
@@ -135,7 +135,7 @@ export const CreateAccount = ({
                         }
                     />
                     <span
-                        className='text-sm'
+                        className={fontStyles.small}
                         onClick={swapToLogin}
                     >
                         Already have an account?

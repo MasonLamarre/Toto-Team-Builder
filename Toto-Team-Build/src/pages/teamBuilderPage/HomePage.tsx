@@ -3,10 +3,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
     XMarkIcon,
-    ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import { TotoTeamBuildLogo } from "../../util/logoSvg"
-import { pokemonData, userInfo } from "../../util/pokemonTypes"
+import { userInfo } from "../../util/pokemonTypes"
 import { pokemonTeam } from "../../util/pokemonTypes"
 import { teamsDatabaseCommands } from "../../util/databaseCommands/teams"
 import { TeamList } from "./TeamList"
@@ -14,7 +13,8 @@ import { CreateNewTeam } from "../../util/CreateNewTeamButton"
 import { UseQueryResult } from "@tanstack/react-query"
 import { EditTeam } from "./EditTeam"
 import { LogoutUserButton } from "../../util/LogoutUserButton"
-import { buttonStyles } from "../../util/sharedStyles"
+import { buttonStyles, fontStyles, screenContainerClass } from "../../util/sharedStyles"
+import { joinTailwindClasses } from "../../util/joinTailwindClasses"
 
 type showTeamsProps = {
     userInfo: userInfo ,
@@ -84,9 +84,9 @@ export const HomePage = ({
     },[selectedTeam])
 
     return (
-        <div className='h-full w-full'>
+        <div className={screenContainerClass}>
             <Transition.Root show={sidebarOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
+                <Dialog as="div" className="relative z-50 " onClose={setSidebarOpen}>
                     <Transition.Child
                         as={Fragment}
                         enter="transition-opacity ease-linear duration-300"
@@ -126,7 +126,7 @@ export const HomePage = ({
                                         </button>
                                     </div>
                                 </Transition.Child>
-                                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+                                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-600 px-6 pb-4">
                                     <div className="flex h-16 shrink-0 items-center">
                                         <TotoTeamBuildLogo 
                                             height={'3rem'}
@@ -137,13 +137,29 @@ export const HomePage = ({
                                         <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                             <li>
                                                 <ul role="list" className="-mx-2 space-y-1">
-                                                    <span className=' text-white' >{`Hello ${userInfo?.firstName ? `${userInfo.firstName}!` : 'Trainer!'}`}</span>
+                                                    <span 
+                                                        className={joinTailwindClasses(
+                                                            fontStyles.large,
+                                                            'text-white'
+                                                        )} 
+                                                    >
+                                                        {`Hello ${userInfo?.firstName ? `${userInfo.firstName}!` : 'Trainer!'}`}
+                                                    </span>
                                                 </ul>
                                             </li>
+
+                
                                             <li>
-                                                <div className="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
+                                                <span
+                                                    className={joinTailwindClasses(
+                                                        fontStyles.small,
+                                                        'text-cyan-200'
+                                                    )}
+                                                >
+                                                    Your teams
+                                                </span>
                                                 <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                                    {/* sidebar teams */}
+                                                    
                                                 </ul>
                                             </li>
                                             <li className="mt-auto">
@@ -161,8 +177,8 @@ export const HomePage = ({
                 </Dialog>
             </Transition.Root>
 
-            <div className="lg:pl-72 h-full w-full">
-                <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+            <div className="h-full w-full">
+                <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-cyan-300 bg-cyan-200 px-4 shadow-sm">
 
                     <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
@@ -182,15 +198,15 @@ export const HomePage = ({
                     </div>
 
                     {/* Separator */}
-                    <div className="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true" />
+                    <div className="h-6 w-px bg-gray-900/10" aria-hidden="true" />
 
-                    <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
+                    <button type="button" className="-m-2.5 p-2.5 text-gray-700" onClick={() => setSidebarOpen(true)}>
                         <span className="sr-only">Open sidebar</span>
                         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
                 </div>
 
-                <div className="h-[90%]">
+                <div className="h-[90%] mt-3">
                     <div className="h-full px-4 py-2 flex flex-col items-center overflow-auto">
                         {
                             (selectedTeam && userInfo !== undefined) ?  

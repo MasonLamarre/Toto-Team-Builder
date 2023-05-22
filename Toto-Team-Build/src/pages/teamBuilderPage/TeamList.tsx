@@ -53,15 +53,15 @@ const TeamCard = ({
 
     return (
         <div 
-            className="flex flex-col items-center border-2 rounded-md border-purple-500 hover:bg-purple-300"
+            className="flex flex-col items-center border-2 rounded-md border-cyan-500 hover:bg-cyan-300"
             onClick={() => setSelectedTeam(team.SK)}
         >
             <div>
-                <span className=" text-lg font-medium">{`${team.teamName}`}</span>
+                <span className="text-lg font-medium">{`${team.teamName}`}</span>
 
             </div>
 
-            <div className="flex flex-row w-full flex-wrap items-center" >
+            <div className="flex flex-row w-full flex-wrap items-center justify-center" >
                 {
                    pokemonPreviews.map((preview) => preview) 
                 }

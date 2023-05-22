@@ -12,5 +12,10 @@ body,
 #root {
     width: 375px;
     height: 667px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
+    background-color: rgb(207 250 254)
 }

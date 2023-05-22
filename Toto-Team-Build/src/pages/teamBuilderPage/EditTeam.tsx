@@ -5,6 +5,7 @@ import { EditPokemon } from "./editTeamComponents/EditPokemon"
 import { TeammateSelect } from "./editTeamComponents/TeammateSelect"
 import { UpdateTeamButton } from "../../util/UpdateTeamButton"
 import { inputStyles } from "../../util/sharedStyles"
+import { joinTailwindClasses } from "../../util/joinTailwindClasses"
 
 type editTeamProp = {
     team: pokemonTeam
@@ -27,7 +28,7 @@ export const EditTeam = ({
         }
     }
    
-    const [pokemonTeam, setPokemonTeam] = useState(passedTeam)
+    const [pokemonTeam] = useState(passedTeam)
     const [teamname, setTeamname] = useState(team.teamName);
     const [activePokemonData, setActivePokemonData] = useState<pokemonData>(pokemonTeam[0])
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState<number>(0)
@@ -42,7 +43,10 @@ export const EditTeam = ({
             <input
                 value={teamname}
                 onChange={(e) => setTeamname(e.target.value)}
-                className={inputStyles.primary} 
+                className={joinTailwindClasses(
+                    inputStyles.primary,
+                    'w-full text-center font-semibold',
+                )} 
             />
             <PokemonSearch  
                 changeCurrentTeammember={changeCurrentTeammember}

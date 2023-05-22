@@ -1,7 +1,7 @@
 import { StopIcon } from "@heroicons/react/24/outline"
 import { pokemonData } from "../../../util/pokemonTypes"
 import { useState, useEffect } from "react"
-import { inputStyles } from "../../../util/sharedStyles"
+import { fontStyles } from "../../../util/sharedStyles"
 
 type editPokeProps = {
     activePokemonData: pokemonData
@@ -16,24 +16,24 @@ export const EditPokemon = ({
     useEffect(() => {
         setNickname(activePokemonData?.nickName ? activePokemonData.nickName : activePokemonData.name)
     },[activePokemonData])
-    
+
     useEffect(() => {
         changeCurrentTeammember({ ...activePokemonData, nickName: nickname })
     },[nickname])
 
     return (
-        <div className="flex flex-col border items-center border-blue-500">
+        <div className="flex flex-col border items-center border-cyan-500 rounded-md">
            {activePokemonData &&
             <>
                 <div className="flex flex-row w-full justify-between">
-                    <span className="">
+                    <span className={fontStyles.medium}>
                         {`#${activePokemonData.pokedexId}`}
                     </span>
 
                     <input 
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
-                        className=" border-b-2 border-indigo-600 text-center font-medium focus-visible:outline-none"
+                        className=" border-b-2 border-cyan-600 text-center font-medium focus-visible:outline-none bg-cyan-100"
                     />
 
                    <StopIcon 
@@ -48,7 +48,9 @@ export const EditPokemon = ({
                 />
 
                 <div>
-                    <span>{activePokemonData?.level ? `Lv.${activePokemonData.level}` : 'Lv.???'}</span>
+                    <span className={fontStyles.medium}>
+                        {activePokemonData?.level ? `Lv.${activePokemonData.level}` : 'Lv.???'}
+                    </span>
                 </div>
             </> 
            }

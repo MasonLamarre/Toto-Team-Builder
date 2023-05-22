@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { accountDatabaseCommands } from '../../util/databaseCommands/account'
-import { buttonStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
+import { buttonStyles, fontStyles, inputStyles } from '../../util/sharedStyles'
 import { TotoTeamBuildLogo } from '../../util/logoSvg'
 import { userInfo } from '../../util/pokemonTypes'
 
@@ -39,7 +39,7 @@ export const Login = ({
 
 
     return (
-        <div className={screenContainerClass}>
+        <div className='h-full w-full flex flex-col items-center justify-evenly'>
 
             <div>
                 <div 
@@ -50,13 +50,13 @@ export const Login = ({
                         height={'8rem'}
                         width={'8rem'}
                     />
-                    <span>Toto Team Builder</span>
+                    <span className={fontStyles.large}>Toto Team Builder</span>
                 </div>
             </div>
 
             <div className='flex flex-col justify-center gap-4'>
                 <div className='flex flex-col'>
-                    <span>Username</span>
+                    <span className={fontStyles.medium}>Username</span>
                     <input
                         placeholder='"supertrainer123"'
                         value={username}
@@ -66,7 +66,7 @@ export const Login = ({
                 </div>
 
                 <div className='flex flex-col'>
-                    <span>Password</span>
+                    <span className={fontStyles.medium}>Password</span>
                     <input
                         type='password'
                         placeholder='"password"'
@@ -75,7 +75,7 @@ export const Login = ({
                         className={inputStyles.primary}
                     />
                     <span 
-                        className='text-sm'
+                        className={fontStyles.small}
                         onClick={swapToCreateAccount}
                     >
                         Create Account
