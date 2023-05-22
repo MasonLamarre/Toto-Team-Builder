@@ -42,40 +42,34 @@ const useCreateAccount = (newUsername : string) => (
 );
 
 
-const loginUser = async( 
-    username: string,
-    password: string
-) => (
-    await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/user/login', {
-        username: username,
-        password: password
-    }).then(
-        (response) => {
-            console.log(response);
-            return response
-        }
-    ).catch(
-        (err) => {
-            console.log(err);
-            return err
-        }
-    )
-)
+// const loginUser = async( 
+//     username: string,
+//     password: string
+// ) => (
+//     await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/user/login', {
+//         username: username,
+//         password: password
+//     }).then(
+//         (response) => {
+//             console.log(response);
+//             return response
+//         }
+//     ).catch(
+//         (err) => {
+//             console.log(err);
+//             return err
+//         }
+//     )
+// )
 
 const useLoginUser = (username: string) => (
     useMutation({
         mutationKey: [ACCOUNTQUERY.loginUser, username],
-        mutationFn: async(variables : loginUserPayload) => {
-            const response = await loginUser(
-                variables.username,
-                variables.password
-            );
-            if (response?.name === 'AxiosError' || response === undefined) {
-                throw new Error(response.response.data)
-            }
-            return response.data
-            
-        }
+        mutationFn: async (variables: loginUserPayload) => await axios.post('https://jvtk6gdx31.execute-api.us-east-2.amazonaws.com/user/login', {
+            username: variables.username,
+            password: variables.password
+        })
+        
     })
 )
 

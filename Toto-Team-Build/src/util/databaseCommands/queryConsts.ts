@@ -10,3 +10,8 @@ export enum TEAMQUERY {
     update = 'TEAMS/UPDATE',
     delete = 'TEAMS/DELETE'
 }
+
+export enum POKEQUERY {
+    pokemon = 'POKEMON',
+    move = 'MOVE'
+}

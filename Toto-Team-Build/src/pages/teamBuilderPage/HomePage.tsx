@@ -11,10 +11,46 @@ import { pokemonTeam } from "../../util/pokemonTypes"
 import { teamsDatabaseCommands } from "../../util/databaseCommands/teams"
 import { TeamList } from "./TeamList"
 import { CreateNewTeam } from "../../util/CreateNewTeamButton"
+import { UseQueryResult } from "@tanstack/react-query"
+import { EditTeam } from "./EditTeam"
+
+type showTeamsProps = {
+    getUserTeams: UseQueryResult<any, unknown>,
+    userTeams: pokemonTeam[] | undefined,
+    setSelectedTeam: React.Dispatch<React.SetStateAction<string>>
+}
+
+const ShowTeams = ({
+    getUserTeams,
+    userTeams,
+    setSelectedTeam
+} : showTeamsProps) => (
+    
+    getUserTeams.status === 'loading' ? <span>Loading...</span> :
+        ((userTeams && userTeams?.length > 0) ?
+            <>
+                <TeamList
+                    teams={userTeams}
+                    setSelectedTeam={setSelectedTeam}
+                />
+
+                {userTeams.length < 10 &&
+                    <CreateNewTeam
+                        username={userTeams[0].PK}
+                        teamname="unamed team"
+                    />
+                }
+            </>
+            :
+            <span>create new team</span>
+        )
+    
+)
 
 type homePageProps = {
-    userInfo : userInfo | undefined
+    userInfo: userInfo | undefined
 }
+
 
 export const HomePage = ({
     userInfo
@@ -140,26 +176,19 @@ export const HomePage = ({
                     </button>
                 </div>
 
-                <main className="py-10 h-full">
-                    <div className="px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-4">
-                        {getUserTeams.status === 'loading' ? <span>Loading...</span> :
-                            ((userTeams && userTeams?.length > 0) ?
-                                <>
-                                    <TeamList
-                                        teams={userTeams}
-                                        setSelectedTeam={setSelectedTeam}
-                                    />
-                                    
-                                    {userTeams.length < 10 &&
-                                        <CreateNewTeam 
-                                            username={userTeams[0].PK}
-                                            teamname="unamed team"
-                                        />
-                                    }
-                                </>
-                                :
-                                <span>create new team</span>
-                            )
+                <main className="h-full">
+                    <div className="px-4 h-full flex flex-col items-center justify-center gap-4 overflow-scroll">
+                        {
+                            selectedTeam ?  
+                            <EditTeam
+                                team={userTeams?.find((team) => team.SK === selectedTeam)} 
+                            />
+                            :
+                            <ShowTeams
+                                getUserTeams={getUserTeams}
+                                userTeams={userTeams}
+                                setSelectedTeam={setSelectedTeam}
+                            />
                         }
                     </div>
                 </main>

@@ -50,8 +50,9 @@ export const CreateAccount = ({
             password: password
         }, {
             onSuccess: (data) => {
+                console.log(data.data.userInformation);
                 toggleIsLoggedIn();
-                setUserInfo(data.userInformation)
+                setUserInfo(data.data.userInformation)
                 console.log('query success', data)
             }, 
             onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
