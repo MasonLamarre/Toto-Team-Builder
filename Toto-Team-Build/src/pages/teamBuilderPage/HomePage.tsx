@@ -69,6 +69,7 @@ export const HomePage = ({
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [userTeams, setUserTeams] = useState<pokemonTeam[]>([])
     const [selectedTeam, setSelectedTeam] = useState('')
+
     const getUserTeams = teamsDatabaseCommands.getTeams(userInfo?.username ? userInfo.username : '')
 
     useEffect(() => {
@@ -80,10 +81,6 @@ export const HomePage = ({
 
     useEffect(() => {
         getUserTeams.refetch()
-        if(selectedTeam){
-            console.log(selectedTeam);
-            
-        }
     },[selectedTeam])
 
     return (
@@ -170,7 +167,10 @@ export const HomePage = ({
                     <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
                             {selectedTeam &&
-                                <button className={buttonStyles.primary} onClick={() => setSelectedTeam('')}>
+                                <button 
+                                    className={buttonStyles.primary} 
+                                    onClick={() => setSelectedTeam('')}
+                                >
                                     back to teams
                                 </button>
 

@@ -4,6 +4,7 @@ import { PokemonSearch } from "./editTeamComponents/PokeSearch"
 import { EditPokemon } from "./editTeamComponents/EditPokemon"
 import { TeammateSelect } from "./editTeamComponents/TeammateSelect"
 import { UpdateTeamButton } from "../../util/UpdateTeamButton"
+import { inputStyles } from "../../util/sharedStyles"
 
 type editTeamProp = {
     team: pokemonTeam
@@ -27,21 +28,30 @@ export const EditTeam = ({
     }
    
     const [pokemonTeam, setPokemonTeam] = useState(passedTeam)
+    const [teamname, setTeamname] = useState(team.teamName);
     const [activePokemonData, setActivePokemonData] = useState<pokemonData>(pokemonTeam[0])
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState<number>(0)
 
     const changeCurrentTeammember = (newTeammember : pokemonData) => {
+        console.log(pokemonTeam[currentPokemonIndex]);
         pokemonTeam[currentPokemonIndex] = newTeammember
     }
 
     return (
-        <div className="w-full h-full flex flex-col gap-4">
-            <span>{team ? team.teamName : 'Unamned Team'}</span>
+        <div className="w-full h-full flex flex-col gap-3">
+            <input
+                value={teamname}
+                onChange={(e) => setTeamname(e.target.value)}
+                className={inputStyles.primary} 
+            />
             <PokemonSearch  
                 changeCurrentTeammember={changeCurrentTeammember}
                 setActivePokemonData={setActivePokemonData}
             />
-            <EditPokemon activePokemonData={activePokemonData} />
+            <EditPokemon 
+                activePokemonData={activePokemonData} 
+                changeCurrentTeammember={changeCurrentTeammember}
+            />
             {/* move list */}
             <TeammateSelect 
                 team={pokemonTeam}
@@ -51,7 +61,7 @@ export const EditTeam = ({
             <UpdateTeamButton
                 username={username}
                 teamId={team.SK}
-                teamName={team.teamName}
+                teamName={teamname}
                 pokemon={pokemonTeam} 
             />
         </div>

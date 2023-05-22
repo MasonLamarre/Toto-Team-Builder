@@ -54,12 +54,12 @@ const TeammateCard = ({
         pokemon.pokedexId !== 0 ?
             <img
                 onClick={handleClick}
-                className="inline-block h-24 w-24 rounded-full"
+                className="inline-block h-20 w-20 rounded-full"
                 src={pokemon.sprite}
                 alt=''
             />
             :
-            <div className="flex justify-center items-center h-24 w-24 rounded-full">
+            <div className="flex justify-center items-center h-20 w-20 rounded-full">
                 <QuestionMarkCircleIcon
                     onClick={handleClick}
                     className="h-16 w-16 rounded-full"

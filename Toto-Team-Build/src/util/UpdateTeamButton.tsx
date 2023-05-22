@@ -36,7 +36,14 @@ export const UpdateTeamButton = ({
             onClick={handleUpdate}
             className={!username ? buttonStyles.disabled : buttonStyles.primary}
         >
-            Update Team
+            {
+                updateTeam.isLoading ? 'Saving Changes...' : (
+                    updateTeam.isSuccess ? 'Team Saved!' : (
+                        updateTeam.isError ? 'An error occured...' : 'Update Team'
+                    )
+                )
+            }
+
         </button>
     )
 }
