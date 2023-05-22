@@ -9,6 +9,8 @@ import { TotoTeamBuildLogo } from "../../util/logoSvg"
 import { userInfo } from "../../util/pokemonTypes"
 import { pokemonTeam } from "../../util/pokemonTypes"
 import { teamsDatabaseCommands } from "../../util/databaseCommands/teams"
+import { TeamList } from "./TeamList"
+import { CreateNewTeam } from "../../util/CreateNewTeamButton"
 
 type homePageProps = {
     userInfo : userInfo | undefined
@@ -19,14 +21,21 @@ export const HomePage = ({
 } : homePageProps) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [userTeams, setUserTeams] = useState<pokemonTeam[] | undefined>()
-    
+    const [selectedTeam, setSelectedTeam] = useState('')
     const getUserTeams = teamsDatabaseCommands.getTeams(userInfo?.username ? userInfo.username : '')
 
     useEffect(() => {
         if(getUserTeams.data){
             console.log(getUserTeams.data.teams);
+            setUserTeams(getUserTeams.data.teams)
         }
     }, [getUserTeams.data]);
+
+    useEffect(() => {
+        if(selectedTeam){
+            console.log(selectedTeam);
+        }
+    },[selectedTeam])
 
     return (
         <div className='h-full w-full'>
@@ -88,8 +97,7 @@ export const HomePage = ({
                                             <li>
                                                 <div className="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
                                                 <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                                    {/* list teams here */}
-                                                    {/* if no new teams, big create team button */}
+                                                    {/* sidebar teams */}
                                                 </ul>
                                             </li>
                                             <li className="mt-auto">
@@ -112,7 +120,7 @@ export const HomePage = ({
                 </Dialog>
             </Transition.Root>
 
-            <div className="lg:pl-72">
+            <div className="lg:pl-72 h-full w-full">
                 <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
 
                     <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
@@ -132,8 +140,28 @@ export const HomePage = ({
                     </button>
                 </div>
 
-                <main className="py-10">
-                    <div className="px-4 sm:px-6 lg:px-8">{/* Your content */}</div>
+                <main className="py-10 h-full">
+                    <div className="px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-4">
+                        {getUserTeams.status === 'loading' ? <span>Loading...</span> :
+                            ((userTeams && userTeams?.length > 0) ?
+                                <>
+                                    <TeamList
+                                        teams={userTeams}
+                                        setSelectedTeam={setSelectedTeam}
+                                    />
+                                    
+                                    {userTeams.length < 10 &&
+                                        <CreateNewTeam 
+                                            username={userTeams[0].PK}
+                                            teamname="unamed team"
+                                        />
+                                    }
+                                </>
+                                :
+                                <span>create new team</span>
+                            )
+                        }
+                    </div>
                 </main>
             </div>
         </div>

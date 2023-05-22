@@ -12,7 +12,7 @@ export type pokemonTeam = {
     PK: string,
     SK: string,
     teamName: string,
-    pokemon: pokemonData[]
+    pokemonData: pokemonData[]
 }
 
 export type pokemonData = {
