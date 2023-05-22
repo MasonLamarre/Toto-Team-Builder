@@ -18,7 +18,7 @@ const App = () => {
   },[isUserLoggedIn])
 
   return (
-    isUserLoggedIn ? <HomePage userInfo={userInfo}/> : <LandingPage setUserInfo={setUserInfo}  toggleUserLoggedIn={toggleLoggedIn}/>
+    isUserLoggedIn ? <HomePage toggleUserLoggedIn={toggleLoggedIn}  userInfo={userInfo}/> : <LandingPage setUserInfo={setUserInfo}  toggleUserLoggedIn={toggleLoggedIn}/>
   )
 }
 

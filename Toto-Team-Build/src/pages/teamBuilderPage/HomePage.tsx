@@ -13,17 +13,21 @@ import { TeamList } from "./TeamList"
 import { CreateNewTeam } from "../../util/CreateNewTeamButton"
 import { UseQueryResult } from "@tanstack/react-query"
 import { EditTeam } from "./EditTeam"
+import { LogoutUserButton } from "../../util/LogoutUserButton"
+import { buttonStyles } from "../../util/sharedStyles"
 
 type showTeamsProps = {
+    userInfo: userInfo ,
     getUserTeams: UseQueryResult<any, unknown>,
     userTeams: pokemonTeam[] | undefined,
     setSelectedTeam: React.Dispatch<React.SetStateAction<string>>
 }
 
 const ShowTeams = ({
+    userInfo,
     getUserTeams,
     userTeams,
-    setSelectedTeam
+    setSelectedTeam,
 } : showTeamsProps) => (
     
     getUserTeams.status === 'loading' ? <span>Loading...</span> :
@@ -36,24 +40,31 @@ const ShowTeams = ({
 
                 {userTeams.length < 10 &&
                     <CreateNewTeam
-                        username={userTeams[0].PK}
+                        username={userInfo.username}
                         teamname="unamed team"
+                        setSelectedTeam={setSelectedTeam}
                     />
                 }
             </>
             :
-            <span>create new team</span>
+            <CreateNewTeam 
+                username={userInfo.username}
+                teamname="unamed team"
+                setSelectedTeam={setSelectedTeam}
+            />
         )
     
 )
 
 type homePageProps = {
     userInfo: userInfo | undefined
+    toggleUserLoggedIn: () => void
 }
 
 
 export const HomePage = ({
-    userInfo
+    userInfo,
+    toggleUserLoggedIn
 } : homePageProps) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [userTeams, setUserTeams] = useState<pokemonTeam[]>([])
@@ -63,13 +74,15 @@ export const HomePage = ({
     useEffect(() => {
         if(getUserTeams.data){
             console.log(getUserTeams.data.teams);
-            setUserTeams(getUserTeams.data.teams)
+            setUserTeams([...getUserTeams.data.teams])
         }
     }, [getUserTeams.data]);
 
     useEffect(() => {
+        getUserTeams.refetch()
         if(selectedTeam){
             console.log(selectedTeam);
+            
         }
     },[selectedTeam])
 
@@ -137,15 +150,10 @@ export const HomePage = ({
                                                 </ul>
                                             </li>
                                             <li className="mt-auto">
-                                                <button
-                                                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
-                                                >
-                                                    <ArrowLeftOnRectangleIcon
-                                                        className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                                                        aria-hidden="true"
-                                                    />
-                                                    Log out
-                                                </button>
+                                                <LogoutUserButton
+                                                    username={userInfo ? userInfo.username : ''} 
+                                                    toggleUserLoggedIn={toggleUserLoggedIn}
+                                                />
                                             </li>
                                         </ul>
                                     </nav>
@@ -161,6 +169,12 @@ export const HomePage = ({
 
                     <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                         <div className="flex items-center gap-x-4 lg:gap-x-6">
+                            {selectedTeam &&
+                                <button className={buttonStyles.primary} onClick={() => setSelectedTeam('')}>
+                                    back to teams
+                                </button>
+
+                            }
                             {/* Team name + delete team button */}
 
                             {/* if no team selected, "Select a Team to Begin / Create a Team to begin!" */}
@@ -176,23 +190,31 @@ export const HomePage = ({
                     </button>
                 </div>
 
-                <main className="h-full">
-                    <div className="px-4 h-full flex flex-col items-center justify-center gap-4 overflow-scroll">
+                <div className="h-[90%]">
+                    <div className="h-full px-4 py-2 flex flex-col items-center overflow-auto">
                         {
-                            selectedTeam ?  
+                            (selectedTeam && userInfo !== undefined) ?  
                             <EditTeam
-                                team={userTeams?.find((team) => team.SK === selectedTeam) || {} as pokemonTeam} 
-                                username={userInfo ? userInfo.username : ''}
+                                team={userTeams?.find((team) => team.SK === selectedTeam) || {
+                                    PK : userInfo.username,
+                                    SK: selectedTeam,
+                                    teamName: 'unamed team',
+                                    pokemonData: []
+                                }} 
+                                username={userInfo.username}
                             />
                             :
-                            <ShowTeams
-                                getUserTeams={getUserTeams}
-                                userTeams={userTeams}
-                                setSelectedTeam={setSelectedTeam}
-                            />
+                            (userInfo && 
+                                <ShowTeams
+                                    userInfo={userInfo}
+                                    getUserTeams={getUserTeams}
+                                    userTeams={userTeams}
+                                    setSelectedTeam={setSelectedTeam}
+                                />
+                            )
                         }
                     </div>
-                </main>
+                </div>
             </div>
         </div>
     )

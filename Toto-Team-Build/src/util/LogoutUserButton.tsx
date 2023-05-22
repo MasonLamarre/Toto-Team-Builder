@@ -1,12 +1,14 @@
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/outline";
 import { accountDatabaseCommands } from "./databaseCommands/account"
-import { buttonStyles } from "./sharedStyles";
 
 type logoutUserButtonProps = {
     username : string
+    toggleUserLoggedIn : () => void
 };
 
 export const LogoutUserButton = ({
-    username
+    username,
+    toggleUserLoggedIn
 } : logoutUserButtonProps) => {
     const logoutUser = accountDatabaseCommands.logout(username);
     const handleLogout = () => {
@@ -14,17 +16,21 @@ export const LogoutUserButton = ({
         logoutUser.mutateAsync({
             username: username
         }, {
-            onSuccess: (data) => console.log('query success', data), //create func to return to home screen
+            onSuccess: () => toggleUserLoggedIn(), //create func to return to home screen
             onError: (err) => console.log('query fail', err) // update page to notify an error occured, maybe toastify?
         })
     }
 
     return (
         <button
+            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
             onClick={handleLogout}
-            className={!username ? buttonStyles.disabled : buttonStyles.primary}
         >
-            Logout
+            <ArrowLeftOnRectangleIcon
+                className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                aria-hidden="true"
+            />
+            Log out
         </button>
     )
 }

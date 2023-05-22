@@ -13,7 +13,7 @@ export const TeamList = ({
     setSelectedTeam
 } : teamListProp ) => {
     return(
-        <ul role="list" className="flex flex-col gap-4">
+        <ul role="list" className="flex flex-col py-4 gap-4 ">
             {teams.map((team) => (
                 <TeamCard
                     key={team.SK}
@@ -61,7 +61,7 @@ const TeamCard = ({
 
             </div>
 
-            <div className="flex flex-row w-full flex-wrap justify-center items-center" >
+            <div className="flex flex-row w-full flex-wrap items-center" >
                 {
                    pokemonPreviews.map((preview) => preview) 
                 }

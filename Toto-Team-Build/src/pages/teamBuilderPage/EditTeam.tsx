@@ -12,7 +12,7 @@ type editTeamProp = {
 
 export const EditTeam = ({
     team,
-    username
+    username,
 } : editTeamProp) => {
     const passedTeam = [...team.pokemonData]
     if(passedTeam.length < 6){
