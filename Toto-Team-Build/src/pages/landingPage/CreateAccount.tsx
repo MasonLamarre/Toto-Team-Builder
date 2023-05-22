@@ -2,18 +2,21 @@ import { useState } from 'react'
 import { accountDatabaseCommands } from '../../util/databaseCommands/account'
 import { buttonStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
 import { TotoTeamBuildLogo } from '../../util/logoSvg'
+import { userInfo } from '../../util/pokemonTypes'
 
 
 type createAccProps = {
     toggleIsLoggedIn : () => void
     swapToLogin : () => void
     backToLanding : () => void
+    setUserInfo: React.Dispatch<React.SetStateAction<userInfo | undefined>>
 }
 
 export const CreateAccount = ({
     toggleIsLoggedIn,
     swapToLogin,
-    backToLanding
+    backToLanding,
+    setUserInfo
 } : createAccProps ) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -48,8 +51,9 @@ export const CreateAccount = ({
         }, {
             onSuccess: (data) => {
                 toggleIsLoggedIn();
+                setUserInfo(data.userInformation)
                 console.log('query success', data)
-            }, //create func to login usuer
+            }, 
             onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
         })
     };

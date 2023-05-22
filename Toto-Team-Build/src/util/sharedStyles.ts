@@ -24,4 +24,4 @@ export const inputStyles = {
     error: errorInput
 }
 
-export const screenContainerClass = 'h-[667px] w-[375px] flex flex-col items-center justify-center'
+export const screenContainerClass = 'h-full w-full flex flex-col items-center justify-center'

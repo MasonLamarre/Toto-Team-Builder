@@ -1,3 +1,12 @@
+export type userInfo = {
+    PK : string
+    createdAt: string
+    firstName: string
+    lastName: string
+    online: boolean
+    password: string
+    username: string
+}
 
 export type pokemonTeam = {
     PK: string,

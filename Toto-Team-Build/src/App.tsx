@@ -1,11 +1,14 @@
 import { LandingPage } from './pages/landingPage/LandingPage';
 import { useState, useEffect } from "react";
+import { HomePage } from './pages/teamBuilderPage/HomePage';
+import { userInfo } from './util/pokemonTypes';
 
 
 const App = () => {
 
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
-  
+  const [userInfo, setUserInfo] = useState<userInfo | undefined>()
+
   const toggleLoggedIn = () => {
     setIsUserLoggedIn((isLogged) => !isLogged);
   };
@@ -15,7 +18,7 @@ const App = () => {
   },[isUserLoggedIn])
 
   return (
-    isUserLoggedIn ? <span>You logged in</span> : <LandingPage  toggleUserLoggedIn={toggleLoggedIn}/>
+    isUserLoggedIn ? <HomePage userInfo={userInfo}/> : <LandingPage setUserInfo={setUserInfo}  toggleUserLoggedIn={toggleLoggedIn}/>
   )
 }
 

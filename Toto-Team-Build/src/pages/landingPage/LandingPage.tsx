@@ -3,6 +3,7 @@ import { buttonStyles, screenContainerClass } from "../../util/sharedStyles"
 import { TotoTeamBuildLogo } from "../../util/logoSvg";
 import { Login } from "./Login";
 import { CreateAccount } from "./CreateAccount";
+import { userInfo } from "../../util/pokemonTypes";
 
 type loginBtnProps = {
     toggleLogin: () => void
@@ -38,10 +39,12 @@ const CreateNewAccountButton = ({
 
 type landingPageProps = {
     toggleUserLoggedIn : () => void
+    setUserInfo: React.Dispatch<React.SetStateAction<userInfo | undefined>>
 }
 
 export const LandingPage = ({
-    toggleUserLoggedIn
+    toggleUserLoggedIn,
+    setUserInfo
 }: landingPageProps) => {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
@@ -85,8 +88,7 @@ export const LandingPage = ({
 
             <div className='flex flex-col gap-2 items-center justify-center'>
                 <LoginButton
-                    toggleLogin={toggleLogin}
-                    
+                    toggleLogin={toggleLogin}  
                 />
 
                 <CreateNewAccountButton
@@ -101,8 +103,23 @@ export const LandingPage = ({
            className={screenContainerClass}
         >
             { isLoggingIn ? 
-                <Login backToLanding={backToLandingPage} swapToCreateAccount={swapToCreateAccount} toggleUserLoggedIn={toggleUserLoggedIn}/> : 
-                ( isCreatingAccount ? <CreateAccount backToLanding={backToLandingPage} swapToLogin={swapToLogin} toggleIsLoggedIn={toggleUserLoggedIn}/> : <BaseLandingScreen /> ) }
+                <Login 
+                    backToLanding={backToLandingPage} 
+                    swapToCreateAccount={swapToCreateAccount} 
+                    toggleUserLoggedIn={toggleUserLoggedIn}
+                    setUserInfo={setUserInfo}
+                /> : 
+                ( isCreatingAccount ? 
+                    <CreateAccount
+                        backToLanding={backToLandingPage} 
+                        swapToLogin={swapToLogin} 
+                        toggleIsLoggedIn={toggleUserLoggedIn}
+                        setUserInfo={setUserInfo}
+                    /> 
+                    : 
+                    <BaseLandingScreen /> 
+                ) 
+            }
         </div>
     )
 }

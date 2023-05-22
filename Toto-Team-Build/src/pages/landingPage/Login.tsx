@@ -2,18 +2,20 @@ import { useState } from 'react'
 import { accountDatabaseCommands } from '../../util/databaseCommands/account'
 import { buttonStyles, inputStyles, screenContainerClass } from '../../util/sharedStyles'
 import { TotoTeamBuildLogo } from '../../util/logoSvg'
+import { userInfo } from '../../util/pokemonTypes'
 
 type loginProps = {
     toggleUserLoggedIn : () => void
     swapToCreateAccount : () => void
     backToLanding : () => void
+    setUserInfo : React.Dispatch<React.SetStateAction<userInfo | undefined>>
 }
 
 export const Login = ({
     toggleUserLoggedIn,
     swapToCreateAccount,
-    backToLanding
-    
+    backToLanding,
+    setUserInfo
 } : loginProps ) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -27,6 +29,7 @@ export const Login = ({
             }, {
                 onSuccess: (data) => {
                     toggleUserLoggedIn();
+                    setUserInfo(data.userInformation)
                     console.log('query success', data)
                 }, //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
@@ -71,7 +74,6 @@ export const Login = ({
                         onChange={(e) => setPassword(e.target.value)}
                         className={inputStyles.primary}
                     />
-                    {/* link back to landing page */}
                     <span 
                         className='text-sm'
                         onClick={swapToCreateAccount}
