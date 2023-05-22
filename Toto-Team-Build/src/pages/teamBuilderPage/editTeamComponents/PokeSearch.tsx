@@ -3,6 +3,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { pokemonAPI } from '../../../util/databaseCommands/pokemonAPI';
 import { joinTailwindClasses } from '../../../util/joinTailwindClasses';
+import { pokemonData } from '../../../util/pokemonTypes';
 
 type pokemonRes = {
     name: string,
@@ -10,10 +11,12 @@ type pokemonRes = {
 }
 
 type pokeSearchProp = {
-    setActivePokemonData: React.Dispatch<React.SetStateAction<any>>
+    changeCurrentTeammember: (newTeammember: pokemonData) => void
+    setActivePokemonData: React.Dispatch<React.SetStateAction<pokemonData>>
 }
 
 export const PokemonSearch = ({
+    changeCurrentTeammember,
     setActivePokemonData
 } : pokeSearchProp) => {
     const [selectedPokemon, setSelectedPokemon] = useState<pokemonRes>({ name: '' , url: ''})
@@ -32,13 +35,15 @@ export const PokemonSearch = ({
 
     useEffect(() => {
         if(searchPokemon.data){
-            const pokeData = searchPokemon.data.data
-            setActivePokemonData({
-                name: pokeData.name,
-                pokedexId : pokeData.id,
-                sprite: pokeData.sprites.front_default,
-                type: pokeData.types[0].name
-            })
+            const pokeData = {
+                name: searchPokemon.data.data.name,
+                pokedexId: searchPokemon.data.data.id,
+                sprite: searchPokemon.data.data.sprites.front_default,
+                type: searchPokemon.data.data.types[0].name
+            }
+            // add logic to properly fetch pokemon types
+            changeCurrentTeammember(pokeData)
+            setActivePokemonData(pokeData)
         }
     }, [searchPokemon.data])
 

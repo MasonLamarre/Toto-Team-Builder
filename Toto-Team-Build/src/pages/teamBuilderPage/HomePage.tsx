@@ -6,7 +6,7 @@ import {
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import { TotoTeamBuildLogo } from "../../util/logoSvg"
-import { userInfo } from "../../util/pokemonTypes"
+import { pokemonData, userInfo } from "../../util/pokemonTypes"
 import { pokemonTeam } from "../../util/pokemonTypes"
 import { teamsDatabaseCommands } from "../../util/databaseCommands/teams"
 import { TeamList } from "./TeamList"
@@ -56,7 +56,7 @@ export const HomePage = ({
     userInfo
 } : homePageProps) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [userTeams, setUserTeams] = useState<pokemonTeam[] | undefined>()
+    const [userTeams, setUserTeams] = useState<pokemonTeam[]>([])
     const [selectedTeam, setSelectedTeam] = useState('')
     const getUserTeams = teamsDatabaseCommands.getTeams(userInfo?.username ? userInfo.username : '')
 
@@ -181,7 +181,8 @@ export const HomePage = ({
                         {
                             selectedTeam ?  
                             <EditTeam
-                                team={userTeams?.find((team) => team.SK === selectedTeam)} 
+                                team={userTeams?.find((team) => team.SK === selectedTeam) || {} as pokemonTeam} 
+                                username={userInfo ? userInfo.username : ''}
                             />
                             :
                             <ShowTeams
