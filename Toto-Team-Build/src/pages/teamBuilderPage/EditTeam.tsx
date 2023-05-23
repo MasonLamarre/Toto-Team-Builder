@@ -34,7 +34,7 @@ export const EditTeam = ({
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState<number>(0)
 
     const changeCurrentTeammember = (newTeammember : pokemonData) => {
-        console.log(pokemonTeam[currentPokemonIndex]);
+        // console.log(pokemonTeam[currentPokemonIndex]);
         pokemonTeam[currentPokemonIndex] = newTeammember
     }
 

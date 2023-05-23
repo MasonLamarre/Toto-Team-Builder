@@ -13,9 +13,9 @@ const App = () => {
     setIsUserLoggedIn((isLogged) => !isLogged);
   };
 
-  useEffect(() => {
-    console.log('user logg in? ', isUserLoggedIn);
-  },[isUserLoggedIn])
+  // useEffect(() => {
+  //   console.log('user logg in? ', isUserLoggedIn);
+  // },[isUserLoggedIn])
 
   return (
     isUserLoggedIn ? <HomePage toggleUserLoggedIn={toggleLoggedIn}  userInfo={userInfo}/> : <LandingPage setUserInfo={setUserInfo}  toggleUserLoggedIn={toggleLoggedIn}/>

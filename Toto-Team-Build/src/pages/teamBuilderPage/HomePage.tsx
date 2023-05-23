@@ -74,7 +74,7 @@ export const HomePage = ({
 
     useEffect(() => {
         if(getUserTeams.data){
-            console.log(getUserTeams.data.teams);
+            // console.log(getUserTeams.data.teams);
             setUserTeams([...getUserTeams.data.teams])
         }
     }, [getUserTeams.data]);

@@ -30,7 +30,7 @@ export const Login = ({
                 onSuccess: (data) => {
                     toggleUserLoggedIn();
                     setUserInfo(data.data.userInformation)
-                    console.log('query success', data)
+                    // console.log('query success', data)
                 }, //create func to login usuer
                 onError: (err) => console.log('query fail', err) // update page to notify an error occured, lookout for code 409
             })
