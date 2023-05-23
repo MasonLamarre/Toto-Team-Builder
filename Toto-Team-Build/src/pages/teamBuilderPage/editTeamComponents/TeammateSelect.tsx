@@ -26,7 +26,7 @@ export const TeammateSelect = ({
         ) 
     }
     return (
-        <div className="flex flex-row w-full flex-wrap justify-center items-center">
+        <div className="flex flex-row w-full h-1/6 flex-wrap justify-center items-center">
             { teammates.map((teammember) => teammember )}
         </div>
     )
@@ -54,12 +54,12 @@ const TeammateCard = ({
         pokemon.pokedexId !== 0 ?
             <img
                 onClick={handleClick}
-                className="inline-block h-20 w-20 rounded-full"
+                className="inline-block h-14 w-14 rounded-full"
                 src={pokemon.sprite}
                 alt=''
             />
             :
-            <div className="flex justify-center items-center h-20 w-20 rounded-full">
+            <div className="flex justify-center items-center h-14 w-14 rounded-full">
                 <QuestionMarkCircleIcon
                     onClick={handleClick}
                     className="h-16 w-16 rounded-full"
